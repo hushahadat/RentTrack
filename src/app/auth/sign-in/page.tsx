@@ -64,7 +64,7 @@ const signIn = () => {
           </form>
           <div className="text-center mt-6">
             <p className="text-sm">
-              Don't have an account?
+              Don&apos;t have an account ?
               <a href="/" className="text-blue-500 hover:underline">
                 Sign up
               </a>
