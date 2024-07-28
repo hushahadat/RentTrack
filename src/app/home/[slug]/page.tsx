@@ -77,8 +77,6 @@ const HomePage = () => {
                 >
                   SUBMIT
                 </button>
-             
-              
             </div>
           </div>
         </div>
