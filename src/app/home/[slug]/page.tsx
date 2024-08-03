@@ -94,7 +94,7 @@ const HomePage = () => {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row, index) => (
+                {rows?.map((row, index) => (
                   <tr key={index}>
                     <td className="border px-4 py-2">{row.month}</td>
                     <td className="border px-4 py-2">{row.rent}</td>

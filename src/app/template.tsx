@@ -1,11 +1,13 @@
 import NavBar from "@/components/Navbar/NavBar";
-
+import { AppDataProvider } from "@/context/AppContext";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <NavBar />
-      <div>{children}</div>
+      <AppDataProvider>
+        <NavBar />
+        <div>{children}</div>
+      </AppDataProvider>
     </>
-  );
+  );  
 }
