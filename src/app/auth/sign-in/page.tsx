@@ -48,14 +48,6 @@ const signIn = () => {
               <span className="text-sm text-gray-500">OR</span>
               <span className="block h-px w-1/3 bg-gray-300"></span>
             </div>
-            <div className="flex items-center justify-center">
-              <button
-                type="button"
-                className="flex items-center justify-center w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              >
-                <i className="fab fa-facebook mr-2"></i> Log in with Facebook
-              </button>
-            </div>
             <div className="text-center mt-4">
               <a href="#" className="text-sm text-blue-500 hover:underline">
                 Forgot password?
@@ -69,11 +61,6 @@ const signIn = () => {
                 Sign up
               </a>
             </p>
-          </div>
-          <div className="text-center mt-4">
-            <a href="#" className="text-sm text-blue-500 hover:underline">
-              Get the app.
-            </a>
           </div>
         </div>
       </div>

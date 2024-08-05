@@ -9,5 +9,5 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <div>{children}</div>
       </AppDataProvider>
     </>
-  );  
+  );
 }

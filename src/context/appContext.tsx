@@ -1,5 +1,11 @@
 "use client";
-import { createContext, useState, ReactNode, FC, useContext, Dispatch } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useContext,
+  Dispatch,
+} from "react";
 import AppDataDummy from "@/static/data";
 
 export interface IAppContextProps {
@@ -16,23 +22,10 @@ export interface MyProviderProps {
 export const AppDataProvider = ({ children }: MyProviderProps) => {
   const [appInfo, setState] = useState<any>(AppDataDummy); // Replace `any` with your specific state type
 
-  const Value = {appInfo, setState}
+  const value = { appInfo, setState };
 
-  return (
-    <AppContext.Provider value={Value}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
-// export const useAppContext = () => useContext(AppContext);
+export const useAppContext = () => useContext(AppContext);
 
-export const useAppContext = (): IAppContextProps => {
-  const context = useContext(AppContext);
-  if (!context) {
-    console.log("++++++++++++++++++++++++++++++++++++++");
-
-    throw new Error("useAppContext must be used within an AppDataProvider");
-  }
-  return context;
-};
