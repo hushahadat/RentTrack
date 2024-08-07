@@ -1,8 +1,35 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const signIn = () => {
-  const handleLoginClick = () => {
+const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState({ email: "", password: "" });
+
+  const handleLogin = () => {
     // Handle login logic here
+    // localStorage.setItem("token", " res.data.token");
+    console.log("Login successful, token saved to localStorage");
+  };
+  function validateForm() {
+    let er = { email: "", password: "" };
+    if (!email || !emailRegex.test(email)) {
+      er.email = "Enter the proper email";
+    }
+    if (!password || password.length < 6) {
+      er.password = "Password should be at least 6 characters";
+    }
+    console.log("====================================");
+
+    setError(er);
+    return er;
+  }
+  const handleLoginClick = () => {
+    const er_res = validateForm();
+    if (!er_res?.email && !er_res?.password) {
+      handleLogin();
+    }
   };
   return (
     <React.Fragment>
@@ -20,10 +47,16 @@ const signIn = () => {
               <input
                 type="text"
                 id="email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError({ ...error, email: "" });
+                }}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                required
               />
             </div>
+            {error.email && (
+              <p className="text-red-500 text-sm">{error.email}</p>
+            )}
             <div>
               <label
                 htmlFor="password"
@@ -34,15 +67,25 @@ const signIn = () => {
               <input
                 type="password"
                 id="password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError({ ...error, password: "" });
+                }}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                required
               />
             </div>
+            {error.password && (
+              <p className="text-red-500 text-sm">{error.password}</p>
+            )}
             <div>
               <button
                 type="submit"
                 className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                onClick={handleLoginClick}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleLoginClick();
+                }}
               >
                 Log in
               </button>
@@ -71,4 +114,4 @@ const signIn = () => {
     </React.Fragment>
   );
 };
-export default signIn;
+export default SignIn;
