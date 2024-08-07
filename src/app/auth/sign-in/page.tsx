@@ -1,6 +1,9 @@
 import React from "react";
 
 const signIn = () => {
+  const handleLoginClick = () => {
+    // Handle login logic here
+  };
   return (
     <React.Fragment>
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -39,6 +42,7 @@ const signIn = () => {
               <button
                 type="submit"
                 className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                onClick={handleLoginClick}
               >
                 Log in
               </button>

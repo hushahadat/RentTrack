@@ -1,4 +1,4 @@
-import { useAppContext } from "@/context/AppContext";
+import { useAppContext } from "@/context/ApplicationContext";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -38,4 +38,3 @@ export const CardList = () => {
     </div>
   );
 };
-
