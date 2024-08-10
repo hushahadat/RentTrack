@@ -17,15 +17,16 @@ const SignIn = () => {
   const handleLogin = async () => {
     try {
       const res = await loginUserByEmailAndPassword(email, password);
-      if (res.status === "failed") {
+      if (res.status === "sucess") {
+        const dataToSet = res.data;
+        setUserData(dataToSet);
+        localStorage.setItem("__user__", JSON.stringify(dataToSet));
+        router.push("/");
         setIsloading(false);
-        console.log("Failed Login", res);
-        return;
+        return
       }
-      const dataToSet = res.data;
-      setUserData(dataToSet);
-      localStorage.setItem("__user__", JSON.stringify(dataToSet));
-      router.push("/");
+      console.log("Failed Login", { res });
+
       setIsloading(false);
     } catch (er) {
       setIsloading(false);

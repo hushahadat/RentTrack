@@ -15,9 +15,10 @@ export async function POST(request: Request) {
     const response = await res.json();
     return NextResponse.json(response);
   } catch (error) {
+    console.log("================error====================");
+    console.log(error);
     return NextResponse.json(
-      { success: false, message: "An error occurred" },
-      { status: 500 }
+      { status: "failed", message: "An error occurred" },
     );
   }
 }
