@@ -1,16 +1,31 @@
 "use client";
+import { useAppContext } from "@/context/ApplicationContext";
+import { loginUserByEmailAndPassword } from "@/utils/api_call";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const SignIn = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({ email: "", password: "" });
+  const { setUserData } = useAppContext() || {};
 
-  const handleLogin = () => {
-    // Handle login logic here
-    // localStorage.setItem("token", " res.data.token");
-    console.log("Login successful, token saved to localStorage");
+  const handleLogin = async () => {
+    try {
+      const res = await loginUserByEmailAndPassword(email, password);
+      if (res.status === "failed") {
+        console.log("Failed Login", res);
+        return;
+      }
+      const dataToSet = res.data;
+      setUserData(dataToSet);
+      localStorage.setItem("__user", JSON.stringify(dataToSet));
+      router.push("/");
+    } catch (er) {
+      console.log("🚀 ~ handleLogin ~ ̥:", { er });
+    }
   };
   function validateForm() {
     let er = { email: "", password: "" };
@@ -20,8 +35,6 @@ const SignIn = () => {
     if (!password || password.length < 6) {
       er.password = "Password should be at least 6 characters";
     }
-    console.log("====================================");
-
     setError(er);
     return er;
   }
