@@ -1,4 +1,5 @@
 "use client";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { useAppContext } from "@/context/ApplicationContext";
 import { loginUserByEmailAndPassword } from "@/utils/api_call";
 import { useRouter } from "next/navigation";
@@ -10,20 +11,24 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({ email: "", password: "" });
+  const [loadng, setIsloading] = useState(false);
   const { setUserData } = useAppContext() || {};
 
   const handleLogin = async () => {
     try {
       const res = await loginUserByEmailAndPassword(email, password);
       if (res.status === "failed") {
+        setIsloading(false);
         console.log("Failed Login", res);
         return;
       }
       const dataToSet = res.data;
       setUserData(dataToSet);
-      localStorage.setItem("__user", JSON.stringify(dataToSet));
+      localStorage.setItem("__user__", JSON.stringify(dataToSet));
       router.push("/");
+      setIsloading(false);
     } catch (er) {
+      setIsloading(false);
       console.log("🚀 ~ handleLogin ~ ̥:", { er });
     }
   };
@@ -41,6 +46,7 @@ const SignIn = () => {
   const handleLoginClick = () => {
     const er_res = validateForm();
     if (!er_res?.email && !er_res?.password) {
+      setIsloading(true);
       handleLogin();
     }
   };
@@ -92,14 +98,14 @@ const SignIn = () => {
             )}
             <div>
               <button
-                type="submit"
-                className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="w-full flex justify-center items-center gap-2 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleLoginClick();
                 }}
               >
+                {loadng && <LoadingSpinner />}
                 Log in
               </button>
             </div>

@@ -1,11 +1,11 @@
-
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
+  const base_url = process.env.BASE_URl;
   try {
     const d = await request.json();
 
-    const res = await fetch("http://localhost:3022/api/auth/signin", {
+    const res = await fetch(`${base_url}auth/signin`, {
       method: "POST",
       body: JSON.stringify(d),
       headers: {

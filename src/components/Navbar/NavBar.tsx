@@ -10,7 +10,7 @@ const NavBar = () => {
   const { userData, setUserData } = useAppContext() || {};
 
   const handleLogOut = () => {
-    localStorage.removeItem("__user");
+    localStorage.removeItem("__user__");
     setUserData({});
     router.push("/auth/sign-in");
   };
