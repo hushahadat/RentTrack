@@ -26,8 +26,9 @@ export const AppDataProvider = ({ children }: MyProviderProps) => {
   const [appInfo, setAppInfo] = useState<any>(AppDataDummy); // Replace `any` with your specific state type
   const [userData, setUserData] = useState<any>({}); // Replace `any` with your specific state type
   useEffect(() => {
-    const userData = localStorage.getItem("__user__");
-    if (userData) {
+    let userData = localStorage.getItem("__user__");
+    console.log("userData", userData);
+    if (userData && userData != undefined) {
       setUserData(JSON.parse(userData));
     }
   }, []);
