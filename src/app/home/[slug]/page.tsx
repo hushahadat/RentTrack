@@ -1,22 +1,18 @@
-'use client'
-import React from "react";
-
+"use client";
+import { useAppContext } from "@/context/ApplicationContext";
+import { usePathname } from "next/navigation";
+import React, { useMemo } from "react";
 
 const HomePage = () => {
-  const rows = [
-    { month: "January", rent: "$1000", electricity: "$150" },
-    { month: "February", rent: "$1000", electricity: "$130" },
-    { month: "March", rent: "$1000", electricity: "$120" },
-    { month: "April", rent: "$1000", electricity: "$140" },
-    { month: "May", rent: "$1000", electricity: "$135" },
-    { month: "June", rent: "$1000", electricity: "$145" },
-    { month: "July", rent: "$1000", electricity: "$150" },
-    { month: "August", rent: "$1000", electricity: "$125" },
-    { month: "September", rent: "$1000", electricity: "$130" },
-    { month: "October", rent: "$1000", electricity: "$140" },
-    { month: "November", rent: "$1000", electricity: "$135" },
-    { month: "December", rent: "$1000", electricity: "$145" },
-  ];
+  const { appInfo } = useAppContext() || {};
+  const path = usePathname();
+  const slug = path.split("/").pop();
+  const Informaton = useMemo(() => {
+    if (appInfo) {
+      return appInfo?.find((item: any) => item.homeId === slug);
+    }
+  }, [appInfo, slug]);
+  const recentBills = Informaton?.bills || [];
 
   return (
     <div className="container mx-auto p-4">
@@ -27,29 +23,29 @@ const HomePage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Home Name
+                  Home Id
                 </label>
-                <p className="mt-1 text-gray-900">Sample Home</p>
+                <p className="mt-1 text-gray-900">{Informaton.homeId}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Address
                 </label>
-                <p className="mt-1 text-gray-900">
-                  123 Main Street, City, Country
-                </p>
+                <p className="mt-1 text-gray-900">{Informaton.homeAddress}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Tenant Name
                 </label>
-                <p className="mt-1 text-gray-900">John Doe</p>
+                <p className="mt-1 text-gray-900">{Informaton?.tenantName}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Phone Number
                 </label>
-                <p className="mt-1 text-gray-900">+123 456 7890</p>
+                <p className="mt-1 text-gray-900">
+                  {Informaton?.tenantPhoneNummber}
+                </p>
               </div>
             </div>
           </div>
@@ -58,25 +54,29 @@ const HomePage = () => {
             <div className="grid grid-cols-1 md:grid-cols-1 gap-3">
               <div>
                 <label className=" inline text-sm font-medium text-gray-700">
-                  Previos Meter Reading - 
+                  Previos Meter Reading -
                 </label>
-                <p className="ml-4 mt-1 text-gray-900 font-semibold inline">1121</p>
+                <p className="ml-4 mt-1 text-gray-900 font-semibold inline">
+                  {Informaton?.previousMeterReading}
+                </p>
               </div>
               <div>
                 <label className="inline text-sm font-medium text-gray-700 md:mr-3">
-                  Current Meter Reading - 
+                  Current Meter Reading -
                 </label>
-                <input type="number" className="w-[9rem] md:w-[20rem] ml-1 inline border border-gray-300 rounded-lg py-1 px-1 focus:outline-none focus:ring-2 focus:ring-blue-400"/>
-                
+                <input
+                  type="number"
+                  className="w-[9rem] md:w-[20rem] ml-1 inline border border-gray-300 rounded-lg py-1 px-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
               </div>
               <button
                 className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  onClick={() => {
-                    console.log("LOG DATA");
-                  }}
-                >
-                  SUBMIT
-                </button>
+                onClick={() => {
+                  console.log("LOG DATA");
+                }}
+              >
+                SUBMIT
+              </button>
             </div>
           </div>
         </div>
@@ -94,14 +94,19 @@ const HomePage = () => {
                 </tr>
               </thead>
               <tbody>
-                {rows?.map((row, index) => (
-                  <tr key={index}>
-                    <td className="border px-4 py-2">{row.month}</td>
-                    <td className="border px-4 py-2">{row.rent}</td>
-                    <td className="border px-4 py-2">{row.electricity}</td>
-                    <td className="border px-4 py-2">{row.electricity}</td>
-                  </tr>
-                ))}
+                {recentBills?.map(
+                  (
+                    row: { month: string; rent: number; electricity: number },
+                    index: any
+                  ) => (
+                    <tr key={index}>
+                      <td className="border px-4 py-2">{row.month}</td>
+                      <td className="border px-4 py-2">{row.rent}</td>
+                      <td className="border px-4 py-2">{row.electricity}</td>
+                      <td className="border px-4 py-2">{row.electricity}</td>
+                    </tr>
+                  )
+                )}
               </tbody>
             </table>
           </div>
