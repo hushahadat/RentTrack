@@ -42,17 +42,26 @@ export const loginUserByEmailAndPassword = async (
   }
 };
 
-const getAppdata = async ({ body, token }: { body: any; token: string }) => {
+export const getAppdata = async ({
+  userId,
+  roleId,
+  auth_token,
+}: {
+  userId: string;
+  roleId: string;
+  auth_token: string;
+}) => {
   try {
     const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY || "";
     const encryptedBody = encryptData(
       {
-        body,
-        auth_token: token,
+        userId,
+        roleId,
+        auth_token,
       },
       secretKey
     );
-    const res = await fetch(`${base_url}arent/getAppdata`, {
+    const res = await fetch(`${base_url}rent/getAppdata`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +79,6 @@ const getAppdata = async ({ body, token }: { body: any; token: string }) => {
       return response;
     }
   } catch (er) {
-    console.log("====================================");
-    console.log("error", er);
+    console.log("error    ==== > ", er);
   }
 };

@@ -24,7 +24,10 @@ const UserCard = ({ user }: any) => {
 };
 
 export const CardList = () => {
-  const { appInfo } = useAppContext() || {};
+  const { appInfo, loading } = useAppContext() || {};
+
+  if (loading) return <div>Loading...</div>;
+  if(!appInfo.length) return <div>No data found</div>
 
   return (
     <div className="container mx-auto p-4">
