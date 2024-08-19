@@ -14,6 +14,7 @@ import { getAppdata } from "@/utils/api_call";
 export interface IAppContextProps {
   appInfo: any; // Replace `any` with your specific state type
   loading: boolean;
+  setAppInfo: any;
   userData: any; // Replace `any` with your specific state type
   setUserData: any;
 }
@@ -39,6 +40,9 @@ export const AppDataProvider = ({ children, auth }: MyProviderProps) => {
       });
       if (data.status === "success") {
         setAppInfo(data.data);
+      } else if (data.status === "failed") {
+        localStorage.removeItem("__user__");
+        setUserData(null);
       }
       setLoading(false);
     } catch (e) {
@@ -54,7 +58,7 @@ export const AppDataProvider = ({ children, auth }: MyProviderProps) => {
     }
   }, [userData]);
 
-  const value = { appInfo, userData, setUserData, loading };
+  const value = { appInfo, userData, setAppInfo, setUserData, loading };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

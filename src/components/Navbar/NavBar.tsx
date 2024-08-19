@@ -7,14 +7,15 @@ import React from "react";
 
 const NavBar = () => {
   const router = useRouter();
-  const { userData, setUserData } = useAppContext() || {};
+  const { userData, setUserData, setAppInfo } = useAppContext() || {};
 
   const handleLogOut = () => {
     localStorage.removeItem("__user__");
-    setUserData({});
+    setUserData(null);
+    setAppInfo([]);
     router.push("/auth/sign-in");
   };
-  const userName = userData?.name?.split(' ')[0]
+  const userName = userData?.name?.split(" ")[0];
   return (
     <nav className="bg-white border-b border-gray-300 px-4 py-2 flex justify-between items-center sticky">
       <div className="text-3xl font-bold text-gray-800">
