@@ -1,6 +1,5 @@
 import { decryptData, encryptData } from "./crypto_";
-const base_urll = process.env.NEXT_PUBLIC_BASE_URl;
-const BASE_URL = process.env.BASE_URL;
+const base_url = process.env.NEXT_PUBLIC_BASE_URl;
 
 export const loginUserByEmailAndPassword = async (
   email: string,
@@ -17,9 +16,7 @@ export const loginUserByEmailAndPassword = async (
       },
       secretKey
     );
-    console.log("===============base_url=====================");
-    console.log("base_url", { base_urll, BASE_URL });
-    let res = await fetch(`${base_urll}auth/signin`, {
+    let res = await fetch(`${base_url}auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +61,7 @@ export const getAppdata = async ({
       },
       secretKey
     );
-    const res = await fetch(`${base_urll}rent/getAppdata`, {
+    const res = await fetch(`${base_url}rent/getAppdata`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
