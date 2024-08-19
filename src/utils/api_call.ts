@@ -16,7 +16,7 @@ export const loginUserByEmailAndPassword = async (
       },
       secretKey
     );
-    let res = await fetch("/api/login", {
+    let res = await fetch(`${base_url}auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

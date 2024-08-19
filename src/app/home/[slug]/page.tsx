@@ -7,109 +7,106 @@ const HomePage = () => {
   const { appInfo } = useAppContext() || {};
   const path = usePathname();
   const slug = path.split("/").pop();
-  const Informaton = useMemo(() => {
+  const information = useMemo(() => {
     if (appInfo) {
       return appInfo?.find((item: any) => item.homeId === slug);
     }
   }, [appInfo, slug]);
-  const recentBills = Informaton?.bills || [];
+  const recentBills = information?.bills || [];
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 md:max-h-[20rem]">
-        <div>
-          <div className="bg-white shadow-md rounded-lg p-4 md:max-h-48 mb-2 overflow-auto">
-            <h2 className="text-xl font-bold mb-3">Home and Tenant Details</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Home Id
-                </label>
-                <p className="mt-1 text-gray-900">{Informaton.homeId}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Address
-                </label>
-                <p className="mt-1 text-gray-900">{Informaton.homeAddress}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Tenant Name
-                </label>
-                <p className="mt-1 text-gray-900">{Informaton?.tenantName}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Phone Number
-                </label>
-                <p className="mt-1 text-gray-900">
-                  {Informaton?.tenantPhoneNummber}
-                </p>
-              </div>
+    <div className="container mx-auto p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {/* Home and Tenant Details */}
+        <div className="bg-white shadow-lg rounded-lg p-6">
+          <h2 className="text-2xl font-semibold mb-4">
+            Home and Tenant Details
+          </h2>
+          <div className="space-y-4">
+            <div className="flex justify-between">
+              <span className="text-gray-600">Home Id</span>
+              <span className="font-medium">{information.homeId}</span>
             </div>
-          </div>
-          <div className="bg-white shadow-md rounded-lg p-4 md:max-h-48 overflow-auto">
-            <h2 className="text-xl font-bold mb-4">Log Bills</h2>
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-3">
-              <div>
-                <label className=" inline text-sm font-medium text-gray-700">
-                  Previos Meter Reading -
-                </label>
-                <p className="ml-4 mt-1 text-gray-900 font-semibold inline">
-                  {Informaton?.previousMeterReading}
-                </p>
-              </div>
-              <div>
-                <label className="inline text-sm font-medium text-gray-700 md:mr-3">
-                  Current Meter Reading -
-                </label>
-                <input
-                  type="number"
-                  className="w-[9rem] md:w-[20rem] ml-1 inline border border-gray-300 rounded-lg py-1 px-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-              </div>
-              <button
-                className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                onClick={() => {
-                  console.log("LOG DATA");
-                }}
-              >
-                SUBMIT
-              </button>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Address</span>
+              <span className="font-medium">{information.homeAddress}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Tenant Name</span>
+              <span className="font-medium">{information?.tenantName}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Phone Number</span>
+              <span className="font-medium">
+                {information?.tenantPhoneNummber}
+              </span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-4 ">
-          <h2 className="text-2xl font-bold mb-4">Rent and Electricity Bill</h2>
-          <div className="overflow-auto max-h-[20rem]">
-            <table className="min-w-full bg-white">
-              <thead className="sticky top-0 bg-gray-200">
-                <tr>
-                  <th className="py-2 px-4">Date</th>
-                  <th className="py-2 px-4">Rent</th>
-                  <th className="py-2 px-4">Meter Reading</th>
-                  <th className="py-2 px-4">Electricity Bill</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentBills?.map(
-                  (
-                    row: { month: string; rent: number; electricity: number },
-                    index: any
-                  ) => (
-                    <tr key={index}>
-                      <td className="border px-4 py-2">{row.month}</td>
-                      <td className="border px-4 py-2">{row.rent}</td>
-                      <td className="border px-4 py-2">{row.electricity}</td>
-                      <td className="border px-4 py-2">{row.electricity}</td>
-                    </tr>
-                  )
-                )}
-              </tbody>
-            </table>
+        {/* Log Bills */}
+        <div className="bg-white shadow-lg rounded-lg p-6">
+          <h2 className="text-2xl font-semibold mb-4">Log Bills</h2>
+          <div className="space-y-4">
+            <div className="flex items-center">
+              <span className="text-gray-600">Previous Meter Reading:</span>
+              <span className="ml-2 font-semibold">
+                {information?.previousMeterReading}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <label htmlFor="currentReading" className="text-gray-600 mr-2">
+                Current Meter Reading:
+              </label>
+              <input
+                type="number"
+                id="currentReading"
+                className="w-full md:w-48 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            <button
+              className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              onClick={() => {
+                console.log("LOG DATA");
+              }}
+            >
+              SUBMIT
+            </button>
           </div>
+        </div>
+      </div>
+
+      {/* Rent and Electricity Bill Table */}
+      <div className="bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-2xl font-semibold mb-4">
+          Rent and Electricity Bill
+        </h2>
+        <div className="overflow-y-auto max-h-[20rem]">
+          <table className="min-w-full bg-white">
+            <thead className="sticky top-0 bg-gray-200">
+              <tr>
+                <th className="py-2 px-4 text-left">Date</th>
+                <th className="py-2 px-4 text-left">Rent</th>
+                <th className="py-2 px-4 text-left">Meter Reading</th>
+                <th className="py-2 px-4 text-left">Electricity Bill</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recentBills?.map(
+                (
+                  row: { month: string; rent: number; electricity: number },
+                  index: any
+                ) => (
+                  <tr key={index} className="border-b">
+                    <td className="px-4 py-2">{row.month}</td>
+                    <td className="px-4 py-2">{row.rent}</td>
+                    <td className="px-4 py-2">{row.electricity}</td>
+                    <td className="px-4 py-2">{row.electricity}</td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
